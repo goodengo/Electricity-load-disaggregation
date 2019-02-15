@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 from matplotlib import cm, pyplot as plt
 from matplotlib.dates import YearLocator, MonthLocator
-import cPickle as pk
+import _pickle as pk
 from hmmlearn.hmm import GaussianHMM
 import math
 
@@ -42,8 +42,8 @@ class HMM():
         self.model =  None
 
     def fit_HMM(self,error_metric):
-        print "Looking for optimal number of states and fitting HMM"
-        for i in xrange(2,5):
+        print ("Looking for optimal number of states and fitting HMM")
+        for i in range(2,5):
             candidate = GaussianHMM(n_components=i, covariance_type="full", n_iter=1000)
             candidate.fit(self.X_train)
             if error_metric == HMM_MAD:
@@ -70,7 +70,7 @@ class HMM():
                         best_guess = error
         self.model = best_model
         self.n_states = opt_n_states
-        print "Done. Lowest error of {} achieved with {} states".format(best_guess, opt_n_states)
+        print ("Done. Lowest error of {} achieved with {} states".format(best_guess, opt_n_states))
 
     def extract_means(self):
         return self.model.means_[:,0].flatten()
@@ -91,5 +91,5 @@ class HMM():
         self.fit_HMM()
         state_means = self.extract_means()
         test_error = self.HMM_accuracy(self.X_test, state_means)
-        print "Accuracy for the model with {} hidden states is: {}".format(self.n_states,test_error)
+        print ("Accuracy for the model with {} hidden states is: {}".format(self.n_states,test_error))
 

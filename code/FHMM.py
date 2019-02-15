@@ -21,7 +21,7 @@ def combine_parameters(ind_parameters_list):
     :return: matrix of factorized model parameters
     '''
     FactAParam = ind_parameters_list[0]
-    for idx in xrange(1,len(ind_parameters_list)):
+    for idx in range(1,len(ind_parameters_list)):
         FactA = np.kron(FactAParam,ind_parameters_list[idx])
     return FactAParam
 
@@ -57,14 +57,14 @@ def sort_startprob(mapping, startprob):
     """
     num_elements = len(startprob)
     new_startprob = np.zeros(num_elements)
-    for i in xrange(len(startprob)):
+    for i in range(len(startprob)):
         new_startprob[i] = startprob[mapping[i]]
     return new_startprob
 
 
 def sort_covars(mapping, covars):
     new_covars = np.zeros_like(covars)
-    for i in xrange(len(covars)):
+    for i in range(len(covars)):
         new_covars[i] = covars[mapping[i]]
     return new_covars
 
@@ -199,10 +199,10 @@ class FHMM():
 
             else:
                 # Find the optimum number of states
-                print "Identifying number of hidden states for appliance {}".format(app.name)
+                print ("Identifying number of hidden states for appliance {}".format(app.name))
                 states = cluster(X, max_num_clusters)
                 num_total_states = len(states)
-                print "Number of hidden states for appliance {}: {}".format(app.name, num_total_states)
+                print ("Number of hidden states for appliance {}: {}".format(app.name, num_total_states))
 
             print("Training model for appliance {} with {} hidden states".format(app.name, num_total_states))
             learnt_model[app.name] = GaussianHMM(num_total_states, "full")
@@ -247,7 +247,7 @@ class FHMM():
 
         # Model
         means = OrderedDict()
-        for elec_meter, model in self.individual.iteritems():
+        for elec_meter, model in self.individual.items():
             means[elec_meter] = (
                 model.means_.round().astype(int).flatten().tolist())
             means[elec_meter].sort()
@@ -283,6 +283,6 @@ class FHMM():
             predictions = self.disaggregate_chunk(chunk)
             output_datastore = output_datastore.append(predictions)
             if g != 0 and g%72 == 0:
-                print "Disaggregated {} day(s) of data".format(g/72)
+                print ("Disaggregated {} day(s) of data".format(g/72))
         return output_datastore
 

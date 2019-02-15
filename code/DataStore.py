@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 from datetime import datetime
-import cPickle as pk
+import _pickle as pk
 
 def convert_to_datetime(x):
     return datetime.fromtimestamp(x)
@@ -59,9 +59,9 @@ class DataStore(object):
             select_list = select_channels
         for id in select_list:
             name = 'channel_' + str(id)
-            print "Creating data frame for {}".format(name)
+            print ("Creating data frame for {}".format(name))
             self.channels[id] = load_aggregate_data(self.url, self.house, name)
-            print "Done"
+            print ("Done")
 
     def create_combined_df(self, start, end, freq=None, select_channels = None):
         '''
@@ -103,7 +103,8 @@ class DataStore(object):
             totals.append(total_power)
 
         idx = np.argsort(np.array(totals).flatten()).tolist()[::-1][:k]
-        return [channels[i] for i in idx]
+        return list(channels)
+        #return [channels[i] for i in idx]
 
 
     def pickle_store(self, dest):
